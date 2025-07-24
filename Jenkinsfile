@@ -6,6 +6,11 @@ pipeline {
     }
   }
   stages {
+    stage('Clean Workspace') {
+      steps {
+        sh 'rm -rf target'
+      }
+    }
     stage('Checkout') {
       steps {
         sh 'echo passed'
