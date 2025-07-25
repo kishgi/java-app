@@ -13,10 +13,9 @@ pipeline {
     }
     stage('Checkout') {
       steps {
-        sh 'echo passed'
-        //git branch: 'main', url: 'https://github.com/iam-veeramalla/Jenkins-Zero-To-Hero.git'
+        git branch: 'main', url: 'https://github.com/kishgi/java-app.git'
       }
-    }
+  }
     stage('Build and Test') {
       steps {
         // sh 'ls -ltr'
@@ -51,23 +50,22 @@ pipeline {
       }
     }
     stage('Update Deployment File') {
-        environment {
-            GIT_REPO_NAME = "java-app"
-            GIT_USER_NAME = "kishgi"
-        }
-        steps {
-            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-                sh '''
-                    git config user.email "kishgi1234@gmail.com"
-                    git config user.name "kishgi"
-                    BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" manifests/deployment.yaml
-                    git add manifests/deployment.yaml
-                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-                '''
-            }
-        }
+  environment {
+    GIT_REPO_NAME = "java-app"
+    GIT_USER_NAME = "kishgi"
+  }
+  steps {
+    withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+      sh '''
+        git config user.email "kishgi1234@gmail.com"
+        git config user.name "kishgi"
+        sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" manifests/deployment.yaml
+        git add manifests/deployment.yaml
+        git commit -m "Update deployment image to version ${BUILD_NUMBER}" || echo "No changes to commit"
+        git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
+      '''
     }
+  }
+}
   }
 }
