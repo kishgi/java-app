@@ -52,27 +52,24 @@ pipeline {
       }
     }
     stage('Update Deployment File') {
-  environment {
-    GIT_REPO_NAME = "java-app"
-    GIT_USER_NAME = "kishgi"
-  }
-  steps {
-    withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-      sh '''
-        rm -rf java-app
-        git clone https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
-        cd ${GIT_REPO_NAME}
-        git config user.email "kishgi1234@gmail.com"
-        git config user.name "kishgi"
-        sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" manifests/deployment.yaml
-        git add manifests/deployment.yaml
-        git commit -m "Update deployment image to version ${BUILD_NUMBER}" || echo "No changes to commit"
-        git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
-      '''
+      environment {
+        GIT_REPO_NAME = "java-app"
+        GIT_USER_NAME = "kishgi"
+      }
+    steps {
+      withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+        sh '''
+          rm -rf java-app
+          git clone https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
+          cd ${GIT_REPO_NAME}
+          git config user.email "kishgi1234@gmail.com"
+          git config user.name "kishgi"
+          sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" manifests/deployment.yaml
+          git add manifests/deployment.yaml
+          git commit -m "Update deployment image to version ${BUILD_NUMBER}" || echo "No changes to commit"
+          git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
+        '''
+      }
     }
-  }
-}
-
-
   }
 }
