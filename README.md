@@ -1,7 +1,3 @@
-Absolutely! Here's a polished and clearer version of your README with better explanations and flow, while keeping all your key info and screenshots references intact:
-
----
-
 # Java Application - CI/CD with Jenkins, SonarQube, Argo CD, Docker & Kubernetes
 
 ![Project Structure](images/project-structure.png)
@@ -117,6 +113,10 @@ java-app/
 ### SonarQube Code Analysis
 
 ![SonarQube](images/sonarqube.png)
+
+### Pushed to DockerHub
+
+![DockerHub](images/dockerhub.png)
 
 ---
 
