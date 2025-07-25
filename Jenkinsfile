@@ -59,6 +59,7 @@ pipeline {
   steps {
     withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
       sh '''
+        sh 'rm -rf java-app'
         git clone https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
         cd ${GIT_REPO_NAME}
         git config user.email "kishgi1234@gmail.com"
