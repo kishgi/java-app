@@ -1,10 +1,12 @@
 pipeline {
   agent {
-    docker {
-      image 'kishgi/maven-docker-agent:v1'
-      args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
-    }
+  docker {
+    image 'kishgi/maven-docker-agent:v1'
+    args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+    reuseNode true // this is critical
   }
+}
+
   stages {
     stage('Clean Workspace') {
       steps {
