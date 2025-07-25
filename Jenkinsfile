@@ -59,26 +59,19 @@ pipeline {
   steps {
     withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
       sh '''
-        set -e
+        git clone https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
+        cd ${GIT_REPO_NAME}
         git config user.email "kishgi1234@gmail.com"
         git config user.name "kishgi"
-
-        echo "Updating manifest..."
         sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" manifests/deployment.yaml
-
-        echo "Git status:"
-        git status
-
         git add manifests/deployment.yaml
-        git diff --cached
-
         git commit -m "Update deployment image to version ${BUILD_NUMBER}" || echo "No changes to commit"
-        git remote set-url origin https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
-        git push origin HEAD:main
+        git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
       '''
     }
   }
 }
+
 
   }
 }
