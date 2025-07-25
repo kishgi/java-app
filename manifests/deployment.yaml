@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: java-app
-          image: kishgi/java-app:14
+          image: kishgi/java-app:replaceImageTag
           ports:
             - containerPort: 8080
