@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.kishgi</groupId>
-    <artifactId>spring-boot-demo</artifactId>
+    <artifactId>java-app</artifactId>
     <version>1.0</version>
 
-    <name>spring-boot-demo</name>
+    <name>java-app</name>
     <url></url>
 
     <parent>
@@ -51,7 +51,7 @@
 
     <build>
 
-        <finalName>spring-boot-web</finalName>
+        <finalName>java-app</finalName>
 
         <plugins>
             <plugin>
